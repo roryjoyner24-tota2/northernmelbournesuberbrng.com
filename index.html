@@ -319,13 +319,11 @@
 
         function checkRebirthStatus() {
             const btn = document.getElementById('rebirth-action-btn');
-            // Count unique Godly suburbs currently held on the top leaderboard array
             const uniqueGodlys = topRolls.filter(item => item.tierName === "Godly").length;
             
-            // Update the visual requirements checklist UI counter
             document.getElementById('godly-count').innerText = uniqueGodlys;
 
-            // Rebirth condition requires both 5000 rolls AND 3 unique Godlys
+            // Enforces the strict double threshold barrier
             if (totalRolls >= 5000 && uniqueGodlys >= 3) {
                 btn.classList.add('active');
             } else {
