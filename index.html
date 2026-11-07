@@ -371,7 +371,7 @@
             
             if (dummiesList.length < 2) dummiesList.push("Pascoe Vale", "Fawkner", "Essendon");
             dummiesList.sort(() => Math.random() - 0.5);
-            choicesPool.push(dummiesList, dummiesList);
+           choicesPool.push(dummiesList[0], dummiesList[1]);
             choicesPool.sort(() => Math.random() - 0.5); 
 
             document.getElementById('map-canvas-container').style.display = 'block';
@@ -392,7 +392,7 @@
             const boundaryPoints = generateRandomBorderPoints();
             
             ctx.beginPath();
-            ctx.moveTo(boundaryPoints.x, boundaryPoints.y);
+            ctx.moveTo(boundaryPoints[0].x, boundaryPoints[0].y);
             for (let i = 1; i < boundaryPoints.length; i++) {
                 ctx.lineTo(boundaryPoints[i].x, boundaryPoints[i].y);
             }
