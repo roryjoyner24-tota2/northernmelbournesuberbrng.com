@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suburb RNG Game</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e1e2f, #12121e);
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .game-container {
+            background: rgba(30, 30, 50, 0.8);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(45deg, #ff7b00, #ffae00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sub-heading {
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+        }
+
+        .display-box {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        #suburb-name {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+
+        #rarity-tag {
+            font-size: 0.9rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-top: 10px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            letter-spacing: 1px;
+        }
+
+        .roll-btn {
+            background: linear-gradient(45deg, #00c6ff, #0072ff);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 114, 255, 0.4);
+            transition: transform 0.1s, box-shadow 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .roll-btn:hover {
+            box-shadow: 0 6px 20px rgba(0, 114, 255, 0.6);
+        }
+
+        .roll-btn:active {
+            transform: scale(0.96);
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 25px;
+            font-size: 0.9rem;
+            color: #ccc;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 15px;
+        }
+
+        .leaderboard {
+            margin-top: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .leaderboard h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            color: #00c6ff;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 5px;
+        }
+
+        .leaderboard-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .leaderboard-row:last-child {
+            border-bottom: none;
+        }
+
+        .tier-common { color: #ffffff; text-shadow: 0 0 5px rgba(255,255,255,0.3); }
+        .bg-common { background-color: #4a4a4a; color: white; }
+
+        .tier-uncommon { color: #2ecc71; text-shadow: 0 0 8px rgba(46, 204, 113, 0.5); }
+        .bg-uncommon { background-color: #2ecc71; color: black; }
+
+        .tier-rare { color: #3498db; text-shadow: 0 0 10px rgba(52, 152, 219, 0.6); }
+        .bg-rare { background-color: #3498db; color: white; }
+
+        .tier-epic { color: #9b59b6; text-shadow: 0 0 12px rgba(155, 89, 182, 0.7); }
+        .bg-epic { background-color: #9b59b6; color: white; }
+
+        .tier-legendary { color: #e67e22; animation: glow-legendary 1.5s ease-in-out infinite alternate; }
+        .bg-legendary { background-color: #e67e22; color: white; }
+
+        .tier-exotic { color: #e74c3c; font-weight: 900; animation: glow-exotic 1s ease-in-out infinite alternate; }
+        .bg-exotic { background-color: #e74c3c; color: white; box-shadow: 0 0 10px #e74c3c; }
+
+        @keyframes glow-legendary {
+            from { text-shadow: 0 0 5px #e67e22, 0 0 10px #e67e22; }
+            to { text-shadow: 0 0 10px #e67e22, 0 0 20px #ff9f43; }
+        }
+
+        @keyframes glow-exotic {
+            from { text-shadow: 0 0 5px #e74c3c, 0 0 15px #e74c3c, 0 0 25px #ff6b6b; transform: scale(1); }
+            to { text-shadow: 0 0 10px #e74c3c, 0 0 25px #e74c3c, 0 0 35px #ff4757; transform: scale(1.02); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <h1>Suburb RNG</h1>
+        <div class="sub-heading">SPIN TO ROLL VALUABLE REGIONS</div>
+
+        <div class="display-box" id="display-card">
+            <p id="suburb-name">Click Roll!</p>
+            <span id="rarity-tag" style="display: none;">Common</span>
+        </div>
+
+        <button class="roll-btn" onclick="rollSuburb()">Roll Suburb</button>
+
+        <div class="stats-bar">
+            <div>Total Rolls: <span id="roll-count">0</span></div>
+            <div>Best Rarity: <span id="best-rarity">None</span></div>
+        </div>
+
+        <div class="leaderboard">
+            <h3>🏆 Personal Best Rolls</h3>
+            <div id="leaderboard-list">
+                <div class="leaderboard-row" style="color: #aaa; font-style: italic;">No records yet. Keep rolling!</div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const suburbsDatabase = {
+            common: {
+                name: "Common",
+                chance: 0.50,
+                weight: 1,
+                list: ["Broadmeadows", "Craigieburn", "Epping", "Thomastown", "Lalor", "Campbellfield", "Coolaroo", "Dallas"]
+            },
+            uncommon: {
+                name: "Uncommon",
+                chance: 0.28,
+                weight: 2,
+                list: ["Mill Park", "South Morang", "Roxburgh Park", "Meadow Heights", "Tullamarine", "Gladstone Park", "Jacana", "Westmeadows"]
+            },
+            rare: {
+                name: "Rare",
+                chance: 0.14,
+                weight: 3,
+                list: ["Greenvale", "Attwood", "Somerton", "Mernda", "Doreen", "Diggers Rest", "Bullengarook"]
+            },
+            epic: {
+                name: "Epic",
+                chance: 0.06,
+                weight: 4,
+                list: ["Whittlesea Township", "Bundoora", "Sunbury", "Wollert", "Kalkallo", "Mickleham", "Gisborne"]
+            },
+            legendary: {
+                name: "Legendary",
+                chance: 0.018,
+                weight: 5,
+                list: ["Donnybrook", "Beveridge", "Eden Park", "Merrifield West", "Woodstock", "Humevale", "Clarkefield"]
+            },
+            exotic: {
+                name: "Exotic",
+                chance: 0.002,
+                weight: 6,
+                list: ["Wildwood", "Yuroke", "Oaklands Junction", "Bulla", "Darraweit Guim", "Chintin", "Monegeetta"]
+            }
+        };
+
+        let totalRolls = 0;
+        let highestWeight = 0;
+        let topRolls = []; 
+        function rollSuburb() {
+            totalRolls++;
+            document.getElementById('roll-count').innerText = totalRolls;
+
+            const rand = Math.random();
+            let selectedTierKey = 'common';
+            let cumulativeChance = 0;
+
+            for (const key in suburbsDatabase) {
+                cumulativeChance += suburbsDatabase[key].chance;
+                if (rand <= cumulativeChance) {
+                    selectedTierKey = key;
+                    break;
+                }
+            }
+
+            const tier = suburbsDatabase[selectedTierKey];
+            const randomSuburb = tier.list[Math.floor(Math.random() * tier.list.length)];
+
+            const displayCard = document.getElementById('display-card');
+            const nameEl = document.getElementById('suburb-name');
+            const tagEl = document.getElementById('rarity-tag');
+
+            nameEl.className = '';
+            tagEl.className = '';
+            displayCard.style.borderColor = 'transparent';
+
+            nameEl.innerText = randomSuburb;
+            nameEl.classList.add(`tier-${selectedTierKey}`);
+            
+            tagEl.innerText = `${tier.name} (1 in ${Math.round(1 / tier.chance)})`;
+            tagEl.classList.add(`bg-${selectedTierKey}`);
+            tagEl.style.display = 'inline-block';
+
+            if (tier.weight >= 4) {
+                displayCard.style.borderColor = window.getComputedStyle(nameEl).color;
+            }
+
+            if (tier.weight > highestWeight) {
+                highestWeight = tier.weight;
+                const bestRarityEl = document.getElementById('best-rarity');
+                bestRarityEl.innerText = tier.name;
+                bestRarityEl.className = `tier-${selectedTierKey}`;
+                bestRarityEl.style.fontWeight = 'bold';
+            }
+
+            updateLeaderboard(randomSuburb, tier);
+        }
+
+        function updateLeaderboard(suburb, tier) {
+            const existingEntryIndex = topRolls.findIndex(item => item.suburb === suburb);
+            
+            if (existingEntryIndex === -1) {
+                topRolls.push({ suburb: suburb, tierName: tier.name, weight: tier.weight, count: 1 });
+            } else {
+                topRolls[existingEntryIndex].count++;
+            }
+
+            topRolls.sort((a, b) => b.weight - a.weight || b.count - a.count);
+
+            const listEl = document.getElementById('leaderboard-list');
+            listEl.innerHTML = '';
+
+            topRolls.slice(0, 5).forEach((item, index) => {
+                const row = document.createElement('div');
+                row.className = 'leaderboard-row';
+                const tierKey = item.tierName.toLowerCase();
+                
+                row.innerHTML = `
+                    <span><strong>#${index + 1}</strong> - <span class="tier-${tierKey}">${item.suburb}</span> (${item.tierName})</span>
+                    <span style="color: #aaa;">x${item.count} rolls</span>
+                `;
+                listEl.appendChild(row);
+            });
+        }
+    </script>
+</body>
+</html>
