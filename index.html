@@ -177,19 +177,9 @@
         </div>
 
         <!-- Suburb Border Guessing Game Panel Interface -->
-        <!-- Suburb Border Quiz Panel Interface -->
         <div style="margin-top: 25px; background: rgba(0, 198, 255, 0.05); border: 1px dashed rgba(0, 198, 255, 0.3); border-radius: 12px; padding: 15px; text-align: center;">
-            <h4 style="margin: 0 0 5px 0; font-size: 0.85rem; color: #00c6ff; text-transform: uppercase; letter-spacing: 1px;">🗺️ Suburb Border Challenge</h4>
-            <p style="color: #ffae00; font-size: 0.75rem; margin: 0 0 10px 0; font-weight: bold;">Cost: 250 Rolls per Question</p>
-            
-            <div id="border-question-text" style="display: none; font-size: 1rem; font-weight: bold; color: #ffffff; margin: 12px 0; padding: 10px; background: rgba(0,0,0,0.4); border-radius: 8px;"></div>
-
-            <div style="display: flex; justify-content: center; flex-direction: column; gap: 8px; max-width: 280px; margin: 0 auto;">
-                <button id="map-launch-btn" onclick="startBorderMission()" style="background: #1a2c3a; color: #00c6ff; border: 1px solid #0072ff; padding: 8px 20px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">Start Challenge</button>
-                <div id="quiz-choices-box" style="display: none; gap: 6px; flex-direction: column; width: 100%;"></div>
-            </div>
-        </div>
-
+            <h4 style="margin: 0 0 5px 0; font-size: 0.85rem; color: #00c6ff; text-transform: uppercase; letter-spacing: 1px;">🗺️ Guess the Suburb Border</h4>
+            <p style="color: #ffae00; font-size: 0.75rem; margin: 0 0 10px 0; font-weight: bold;">Cost: 250 Rolls per Mission</p>
             
             <div id="map-canvas-container" style="display: none; background: rgba(0,0,0,0.5); border: 1px solid #444; border-radius: 8px; width: 100%; height: 160px; margin: 10px auto; position: relative;">
                 <canvas id="borderCanvas" width="260" height="150" style="margin-top: 5px;"></canvas>
@@ -346,82 +336,22 @@
             checkRebirthStatus();
         }
 
-                const borderingMap = {
-            "Gladstone Park": ["Tullamarine", "Westmeadows", "Attwood", "Gowanbrae"],
-            "Broadmeadows": ["Dallas", "Coolaroo", "Campbellfield", "Jacana", "Westmeadows"],
-            "Epping": ["Lalor", "Thomastown", "Wollert", "South Morang", "Mill Park", "Somerton", "Campbellfield"],
-            "Craigieburn": ["Roxburgh Park", "Mickleham", "Wollert", "Somerton", "Yuroke"],
-            "Sunbury": ["Diggers Rest", "Bulla", "Wildwood", "Clarkefield", "Riddells Creek", "Gisborne"],
-            "Keilor": ["Keilor East", "Keilor Park", "Taylors Lakes", "St Albans"],
-            "St Albans": ["Kings Park", "Keilor Downs", "Keilor"],
-            "Taylors Lakes": ["Keilor", "Keilor Downs", "Keilor Lodge"],
-            "Strathmore": ["Oak Park", "Strathmore Heights"],
-            "Gowanbrae": ["Tullamarine", "Gladstone Park", "Strathmore Heights", "Oak Park"],
-            "Bundoora": ["Thomastown", "Mill Park", "South Morang"],
-            "Mernda": ["South Morang", "Doreen", "Wollert"],
-            "Wallan": ["Beveridge", "Darraweit Guim", "Kilmore"],
-            "Gisborne": ["Riddells Creek", "Sunbury", "Bullengarook"],
-            "Greenvale": ["Attwood", "Westmeadows", "Meadow Heights", "Roxburgh Park", "Yuroke", "Oaklands Junction"],
-            "Tullamarine": ["Gladstone Park", "Gowanbrae", "Keilor Park", "Attwood"]
-        };
+        function generateRandomBorderPoints() {
+            let points = [];
+            let totalVertices = Math.floor(Math.random() * 4) + 5; 
+            let baseRadius = 45;
+            
+            for (let i = 0; i < totalVertices; i++) {
+                let angle = (i / totalVertices) * Math.PI * 2;
+                let radiusVariance = baseRadius + (Math.random() * 25 - 12);
+                let x = 130 + Math.cos(angle) * radiusVariance;
+                let y = 75 + Math.sin(angle) * radiusVariance;
+                points.push({ x: x, y: y });
+            }
+            return points;
+        }
 
         function startBorderMission() {
-            if (totalRolls < 250) {
-                alert(`❌ INSUFFICIENT ROLLS!\nStarting the challenge requires 250 rolls. You currently only have ${totalRolls}.`);
-                return;
-            }
-
-            totalRolls -= 250;
-            document.getElementById('roll-count').innerText = totalRolls;
-            checkRebirthStatus();
-
-            // Pick a target suburb and one of its real bordering neighbors
-            const mainSuburbs = Object.keys(borderingMap);
-            const targetSuburb = mainSuburbs.sort(() => Math.random() - 0.5).slice(0, 1).join('');
-            const realNeighbors = borderingMap[targetSuburb];
-            const correctAnswer = realNeighbors.slice().sort(() => Math.random() - 0.5).slice(0, 1).join('');
-
-            // Gather all suburbs in the game to pick 2 wrong answers that do NOT border targetSuburb
-            let allSuburbs = [];
-            for (const key in suburbsDatabase) {
-                allSuburbs = allSuburbs.concat(suburbsDatabase[key].list);
-            }
-            const wrongOptions = allSuburbs
-                .filter(sub => sub !== targetSuburb && !realNeighbors.includes(sub))
-                .sort(() => Math.random() - 0.5)
-                .slice(0, 2);
-
-            const choicesPool = [correctAnswer].concat(wrongOptions).sort(() => Math.random() - 0.5);
-
-            // Show the question and hide the start button
-            document.getElementById('map-launch-btn').style.display = 'none';
-            const questionBox = document.getElementById('border-question-text');
-            questionBox.style.display = 'block';
-            questionBox.innerHTML = `Which of these suburbs borders <span style="color: #00c6ff;">${targetSuburb}</span>?`;
-
-            const choicesBox = document.getElementById('quiz-choices-box');
-            choicesBox.style.display = 'flex';
-            choicesBox.innerHTML = '';
-
-            choicesPool.forEach(choice => {
-                const btn = document.createElement('button');
-                btn.innerText = choice;
-                btn.style.cssText = "background: #1a1a2e; color: #fff; border: 1px solid #444; padding: 10px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 4px; width: 100%;";
-                btn.onclick = function() {
-                    if (choice === correctAnswer) {
-                        alert(`🎯 CORRECT! ${correctAnswer} borders ${targetSuburb}!`);
-                        rewardPremiumPrize();
-                    } else {
-                        alert(`❌ INCORRECT!\n${choice} does not border ${targetSuburb}. The correct answer was ${correctAnswer}.`);
-                    }
-                    questionBox.style.display = 'none';
-                    choicesBox.style.display = 'none';
-                    document.getElementById('map-launch-btn').style.display = 'block';
-                };
-                choicesBox.appendChild(btn);
-            });
-        }
-        
             if (totalRolls < 250) {
                 alert(`❌ INSUFFICIENT ROLLS!\nLaunching the map outline scanner requires 250 rolls. You currently only have ${totalRolls}.`);
                 return;
