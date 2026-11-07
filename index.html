@@ -77,12 +77,19 @@
             letter-spacing: 1px;
         }
 
+        .button-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
         .roll-btn {
             background: linear-gradient(45deg, #00c6ff, #0072ff);
             color: white;
             border: none;
-            padding: 15px 40px;
-            font-size: 1.2rem;
+            padding: 15px 35px;
+            font-size: 1.1rem;
             font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
@@ -96,18 +103,98 @@
             box-shadow: 0 6px 20px rgba(0, 114, 255, 0.6);
         }
 
-        .roll-btn:active {
+        .rebirth-btn {
+            background: linear-gradient(45deg, #a83279, #d38312);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: not-allowed;
+            opacity: 0.5;
+            box-shadow: 0 4px 15px rgba(168, 50, 121, 0.3);
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .rebirth-btn.active {
+            cursor: pointer;
+            opacity: 1;
+            box-shadow: 0 6px 20px rgba(168, 50, 121, 0.6);
+        }
+
+        .roll-btn:active, .rebirth-btn.active:active {
             transform: scale(0.96);
         }
 
         .stats-bar {
-            display: flex;
-            justify-content: space-around;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
             margin-top: 25px;
             font-size: 0.9rem;
             color: #ccc;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding-top: 15px;
+            text-align: left;
+        }
+
+        /* Checker Box Panels Styles */
+        .checker-box {
+            margin-top: 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .checker-box h4 {
+            margin: 0 0 10px 0;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            color: #ffae00;
+            letter-spacing: 1px;
+        }
+
+        .checker-input-wrapper {
+            display: flex;
+            gap: 8px;
+        }
+
+        .checker-box input {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 12px;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .checker-box input:focus {
+            border-color: #00c6ff;
+        }
+
+        .checker-btn {
+            background: #4a4a4a;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        #checker-result {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            text-align: left;
+            min-height: 18px;
         }
 
         .leaderboard {
@@ -158,6 +245,9 @@
         .tier-exotic { color: #e74c3c; font-weight: 900; animation: glow-exotic 1s ease-in-out infinite alternate; }
         .bg-exotic { background-color: #e74c3c; color: white; box-shadow: 0 0 10px #e74c3c; }
 
+        .tier-godly { color: #00ffff; font-weight: 900; animation: glow-godly 0.8s ease-in-out infinite alternate; }
+        .bg-godly { background-color: #00ffff; color: black; box-shadow: 0 0 15px #00ffff; }
+
         @keyframes glow-legendary {
             from { text-shadow: 0 0 5px #e67e22, 0 0 10px #e67e22; }
             to { text-shadow: 0 0 10px #e67e22, 0 0 20px #ff9f43; }
@@ -166,6 +256,11 @@
         @keyframes glow-exotic {
             from { text-shadow: 0 0 5px #e74c3c, 0 0 15px #e74c3c, 0 0 25px #ff6b6b; transform: scale(1); }
             to { text-shadow: 0 0 10px #e74c3c, 0 0 25px #e74c3c, 0 0 35px #ff4757; transform: scale(1.02); }
+        }
+
+        @keyframes glow-godly {
+            from { text-shadow: 0 0 5px #00ffff, 0 0 15px #00ffff, 0 0 30px #ffffff; transform: scale(1); }
+            to { text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff, 0 0 45px #ffffff; transform: scale(1.05); }
         }
     </style>
 </head>
@@ -180,11 +275,26 @@
             <span id="rarity-tag" style="display: none;">Common</span>
         </div>
 
-        <button class="roll-btn" onclick="rollSuburb()">Roll Suburb</button>
+        <div class="button-group">
+            <button class="roll-btn" onclick="rollSuburb()">Roll Suburb</button>
+            <button class="rebirth-btn" id="rebirth-action-btn" onclick="triggerRebirth()">Rebirth</button>
+        </div>
 
         <div class="stats-bar">
-            <div>Total Rolls: <span id="roll-count">0</span></div>
+            <div>Total Rolls: <span id="roll-count">0</span> / 100</div>
+            <div>Rebirths: <span id="rebirth-count" style="color: #d38312; font-weight: bold;">0</span></div>
             <div>Best Rarity: <span id="best-rarity">None</span></div>
+            <div>Luck Boost: <span id="luck-boost" style="color: #2ecc71;">+0%</span></div>
+        </div>
+
+        <!-- Dynamic Suburb Lookup Checker Panel -->
+        <div class="checker-box">
+            <h4>🔍 Suburb Rarity Checker</h4>
+            <div class="checker-input-wrapper">
+                <input type="text" id="checker-search-input" placeholder="Type a suburb name (e.g. Keilor)...">
+                <button class="checker-btn" onclick="checkSuburbRarity()">Check</button>
+            </div>
+            <div id="checker-result"></div>
         </div>
 
         <div class="leaderboard">
@@ -196,57 +306,74 @@
     </div>
     <script>
         const suburbsDatabase = {
-            common: {
-                name: "Common",
-                chance: 0.50,
-                weight: 1,
-                list: ["Broadmeadows", "Craigieburn", "Epping", "Thomastown", "Lalor", "Campbellfield", "Coolaroo", "Dallas"]
-            },
-            uncommon: {
-                name: "Uncommon",
-                chance: 0.28,
-                weight: 2,
-                list: ["Mill Park", "South Morang", "Roxburgh Park", "Meadow Heights", "Tullamarine", "Gladstone Park", "Jacana", "Westmeadows"]
-            },
-            rare: {
-                name: "Rare",
-                chance: 0.14,
-                weight: 3,
-                list: ["Greenvale", "Attwood", "Somerton", "Mernda", "Doreen", "Diggers Rest", "Bullengarook"]
-            },
-            epic: {
-                name: "Epic",
-                chance: 0.06,
-                weight: 4,
-                list: ["Whittlesea Township", "Bundoora", "Sunbury", "Wollert", "Kalkallo", "Mickleham", "Gisborne"]
-            },
-            legendary: {
-                name: "Legendary",
-                chance: 0.018,
-                weight: 5,
-                list: ["Donnybrook", "Beveridge", "Eden Park", "Merrifield West", "Woodstock", "Humevale", "Clarkefield"]
-            },
-            exotic: {
-                name: "Exotic",
-                chance: 0.002,
-                weight: 6,
-                list: ["Wildwood", "Yuroke", "Oaklands Junction", "Bulla", "Darraweit Guim", "Chintin", "Monegeetta"]
-            }
+            common: { name: "Common", chance: 0.45, weight: 1, list: ["Broadmeadows", "Craigieburn", "Epping", "Thomastown", "Lalor", "Campbellfield", "Coolaroo", "Dallas"] },
+            uncommon: { name: "Uncommon", chance: 0.28, weight: 2, list: ["Mill Park", "South Morang", "Roxburgh Park", "Meadow Heights", "Tullamarine", "Gladstone Park", "Jacana", "Westmeadows"] },
+            rare: { name: "Rare", chance: 0.15, weight: 3, list: ["Greenvale", "Attwood", "Somerton", "Mernda", "Doreen", "Diggers Rest", "Bullengarook", "Wallan", "Kilmore", "St Albans", "Kings Park"] },
+            epic: { name: "Epic", chance: 0.08, weight: 4, list: ["Whittlesea Township", "Bundoora", "Sunbury", "Wollert", "Kalkallo", "Mickleham", "Gisborne", "Riddells Creek", "Romsey", "Keilor Downs", "Keilor East", "Gowanbrae"] },
+            legendary: { name: "Legendary", chance: 0.035, weight: 5, list: ["Donnybrook", "Beveridge", "Eden Park", "Merrifield West", "Woodstock", "Humevale", "Clarkefield", "Lancefield", "Pyalong", "Keilor Park", "Taylors Lakes", "Strathmore Heights"] },
+            exotic: { name: "Exotic", chance: 0.0048, weight: 6, list: ["Wildwood", "Yuroke", "Oaklands Junction", "Bulla", "Darraweit Guim", "Chintin", "Monegeetta", "Tooborac", "Nulla Vale", "Keilor Lodge", "Strathmore"] },
+            godly: { name: "Godly", chance: 0.0002, weight: 7, list: ["Bolinda", "Springfield", "Goldie", "Hesket", "Oak Park", "Keilor"] }
         };
 
         let totalRolls = 0;
+        let rebirths = 0;
         let highestWeight = 0;
         let topRolls = []; 
+
+        function checkRebirthStatus() {
+            const btn = document.getElementById('rebirth-action-btn');
+            if (totalRolls >= 100) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        }
+        function triggerRebirth() {
+            if (totalRolls < 100) return;
+            
+            rebirths++;
+            totalRolls = 0;
+            highestWeight = 0;
+            topRolls = [];
+            
+            document.getElementById('roll-count').innerText = totalRolls;
+            document.getElementById('rebirth-count').innerText = rebirths;
+            document.getElementById('luck-boost').innerText = `+${rebirths * 5}%`;
+            document.getElementById('best-rarity').innerText = "None";
+            document.getElementById('best-rarity').className = "";
+            
+            const listEl = document.getElementById('leaderboard-list');
+            listEl.innerHTML = '<div class="leaderboard-row" style="color: #aaa; font-style: italic;">No records yet. Keep rolling!</div>';
+            
+            document.getElementById('suburb-name').innerText = "Rebirthed!";
+            document.getElementById('rarity-tag').style.display = 'none';
+            document.getElementById('display-card').style.borderColor = 'transparent';
+            
+            checkRebirthStatus();
+        }
         function rollSuburb() {
             totalRolls++;
             document.getElementById('roll-count').innerText = totalRolls;
+            checkRebirthStatus();
 
+            const luckBonus = 1 + (rebirths * 0.05); 
             const rand = Math.random();
             let selectedTierKey = 'common';
+            
+            let baseChances = {
+                godly: suburbsDatabase.godly.chance * luckBonus,
+                exotic: suburbsDatabase.exotic.chance * luckBonus,
+                legendary: suburbsDatabase.legendary.chance * luckBonus,
+                epic: suburbsDatabase.epic.chance * luckBonus,
+                rare: suburbsDatabase.rare.chance * luckBonus,
+                uncommon: suburbsDatabase.uncommon.chance * luckBonus
+            };
+            
             let cumulativeChance = 0;
-
-            for (const key in suburbsDatabase) {
-                cumulativeChance += suburbsDatabase[key].chance;
+            const checkTiers = ['godly', 'exotic', 'legendary', 'epic', 'rare', 'uncommon'];
+            
+            for (const key of checkTiers) {
+                cumulativeChance += baseChances[key];
                 if (rand <= cumulativeChance) {
                     selectedTierKey = key;
                     break;
@@ -267,7 +394,7 @@
             nameEl.innerText = randomSuburb;
             nameEl.classList.add(`tier-${selectedTierKey}`);
             
-            tagEl.innerText = `${tier.name} (1 in ${Math.round(1 / tier.chance)})`;
+            tagEl.innerText = `${tier.name} (Base: 1 in ${Math.round(1 / tier.chance)})`;
             tagEl.classList.add(`bg-${selectedTierKey}`);
             tagEl.style.display = 'inline-block';
 
@@ -285,7 +412,6 @@
 
             updateLeaderboard(randomSuburb, tier);
         }
-
         function updateLeaderboard(suburb, tier) {
             const existingEntryIndex = topRolls.findIndex(item => item.suburb === suburb);
             
@@ -311,6 +437,41 @@
                 `;
                 listEl.appendChild(row);
             });
+        }
+
+        // Suburb Lookup Verification Tool
+        function checkSuburbRarity() {
+            const inputEl = document.getElementById('checker-search-input');
+            const resultEl = document.getElementById('checker-result');
+            const query = inputEl.value.trim().toLowerCase();
+            
+            if (!query) {
+                resultEl.innerText = "Please enter a suburb name first.";
+                resultEl.className = "";
+                resultEl.style.color = "#ff4757";
+                return;
+            }
+
+            let found = false;
+
+            for (const key in suburbsDatabase) {
+                const tier = suburbsDatabase[key];
+                // Check if any suburb in this tier matches the typed text (case insensitive)
+                const match = tier.list.find(suburb => suburb.toLowerCase() === query);
+                
+                if (match) {
+                    resultEl.innerHTML = `✅ <span class="tier-${key}">${match}</span> is in the game! Rarity Tier: <span class="tier-${key}">${tier.name}</span> (Base: 1 in ${Math.round(1 / tier.chance)})`;
+                    resultEl.style.color = "#ffffff";
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                resultEl.innerText = `❌ "${inputEl.value}" was not found in the game files.`;
+                resultEl.className = "";
+                resultEl.style.color = "#ff4757";
+            }
         }
     </script>
 </body>
