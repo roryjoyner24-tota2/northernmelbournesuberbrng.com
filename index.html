@@ -141,7 +141,6 @@
             text-align: left;
         }
 
-        /* Checker Box Panels Styles */
         .checker-box {
             margin-top: 25px;
             background: rgba(255, 255, 255, 0.05);
@@ -281,13 +280,13 @@
         </div>
 
         <div class="stats-bar">
-            <div>Total Rolls: <span id="roll-count">0</span> / 100</div>
+            <div>Total Rolls: <span id="roll-count">0</span> / 5000</div>
+            <div>Godlys Found: <span id="godly-count" style="color: #00ffff; font-weight: bold;">0</span> / 3</div>
             <div>Rebirths: <span id="rebirth-count" style="color: #d38312; font-weight: bold;">0</span></div>
-            <div>Best Rarity: <span id="best-rarity">None</span></div>
             <div>Luck Boost: <span id="luck-boost" style="color: #2ecc71;">+0%</span></div>
+            <div style="grid-column: span 2;">Best Rarity: <span id="best-rarity">None</span></div>
         </div>
 
-        <!-- Dynamic Suburb Lookup Checker Panel -->
         <div class="checker-box">
             <h4>🔍 Suburb Rarity Checker</h4>
             <div class="checker-input-wrapper">
@@ -302,8 +301,6 @@
             <div id="leaderboard-list">
                 <div class="leaderboard-row" style="color: #aaa; font-style: italic;">No records yet. Keep rolling!</div>
             </div>
-        </div>
-    </div>
     <script>
         const suburbsDatabase = {
             common: { name: "Common", chance: 0.45, weight: 1, list: ["Broadmeadows", "Craigieburn", "Epping", "Thomastown", "Lalor", "Campbellfield", "Coolaroo", "Dallas"] },
@@ -322,14 +319,22 @@
 
         function checkRebirthStatus() {
             const btn = document.getElementById('rebirth-action-btn');
-            if (totalRolls >= 100) {
+            // Count unique Godly suburbs currently held on the top leaderboard array
+            const uniqueGodlys = topRolls.filter(item => item.tierName === "Godly").length;
+            
+            // Update the visual requirements checklist UI counter
+            document.getElementById('godly-count').innerText = uniqueGodlys;
+
+            // Rebirth condition requires both 5000 rolls AND 3 unique Godlys
+            if (totalRolls >= 5000 && uniqueGodlys >= 3) {
                 btn.classList.add('active');
             } else {
                 btn.classList.remove('active');
             }
         }
         function triggerRebirth() {
-            if (totalRolls < 100) return;
+            const uniqueGodlys = topRolls.filter(item => item.tierName === "Godly").length;
+            if (totalRolls < 5000 || uniqueGodlys < 3) return;
             
             rebirths++;
             totalRolls = 0;
@@ -337,6 +342,7 @@
             topRolls = [];
             
             document.getElementById('roll-count').innerText = totalRolls;
+            document.getElementById('godly-count').innerText = 0;
             document.getElementById('rebirth-count').innerText = rebirths;
             document.getElementById('luck-boost').innerText = `+${rebirths * 5}%`;
             document.getElementById('best-rarity').innerText = "None";
@@ -354,7 +360,6 @@
         function rollSuburb() {
             totalRolls++;
             document.getElementById('roll-count').innerText = totalRolls;
-            checkRebirthStatus();
 
             const luckBonus = 1 + (rebirths * 0.05); 
             const rand = Math.random();
@@ -411,6 +416,7 @@
             }
 
             updateLeaderboard(randomSuburb, tier);
+            checkRebirthStatus();
         }
         function updateLeaderboard(suburb, tier) {
             const existingEntryIndex = topRolls.findIndex(item => item.suburb === suburb);
@@ -456,7 +462,6 @@
 
             for (const key in suburbsDatabase) {
                 const tier = suburbsDatabase[key];
-                // Check if any suburb in this tier matches the typed text (case insensitive)
                 const match = tier.list.find(suburb => suburb.toLowerCase() === query);
                 
                 if (match) {
