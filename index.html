@@ -477,5 +477,124 @@
             }
         }
     </script>
+<!-- Mini-Game Panel (Injected Interface Layout) -->
+<div style="margin-top: 25px; background: rgba(0, 198, 255, 0.05); border: 1px dashed rgba(0, 198, 255, 0.3); border-radius: 12px; padding: 15px; text-align: center;">
+    <h4 style="margin: 0 0 5px 0; font-size: 0.85rem; color: #00c6ff; text-transform: uppercase; letter-spacing: 1px;">🗺️ Guess the Suburb Border</h4>
+    <p style="color: #ffae00; font-size: 0.75rem; margin: 0 0 10px 0; font-weight: bold;">Cost: 250 Rolls per Mission</p>
+    
+    <div id="map-canvas-container" style="display: none; background: rgba(0,0,0,0.5); border: 1px solid #444; border-radius: 8px; width: 100%; height: 160px; margin: 10px auto; position: relative;">
+        <canvas id="borderCanvas" width="260" height="150" style="margin-top: 5px;"></canvas>
+    </div>
+
+    <div id="mission-clue-box" style="display: none; background: rgba(255,174,0,0.1); border: 1px solid rgba(255,174,0,0.2); border-radius: 6px; padding: 8px; margin: 10px 0; font-size: 0.8rem; color: #ffae00; text-align: left; font-weight: bold;"></div>
+
+    <div style="display: flex; justify-content: center; flex-direction: column; gap: 8px; max-width: 280px; margin: 0 auto;">
+        <button id="map-launch-btn" onclick="startBorderMission()" style="background: #1a2c3a; color: #00c6ff; border: 1px solid #0072ff; padding: 8px 20px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">Launch Scanner</button>
+        <div id="quiz-choices-box" style="display: none; gap: 6px; flex-direction: column; width: 100%;"></div>
+    </div>
+</div>
+
+<script>
+    // Helper function to roll a random premium prize (skipping index 0)
+    function rewardPremiumPrize() {
+        let prizeTierKey = Math.random() < 0.85 ? 'exotic' : 'godly';
+        let tierList = suburbsDatabase[prizeTierKey].list;
+        let randomIndex = Math.floor(Math.random() * (tierList.length - 1)) + 1;
+        let prizeSuburb = tierList[randomIndex];
+        
+        alert(`🎁 MISSION REWARD DROPPED!\nYou won a guaranteed premium ${suburbsDatabase[prizeTierKey].name} prize: ${prizeSuburb}!`);
+        updateLeaderboard(prizeSuburb, suburbsDatabase[prizeTierKey]);
+        checkRebirthStatus();
+    }
+
+    function generateRandomBorderPoints() {
+        let points = [];
+        let totalVertices = Math.floor(Math.random() * 4) + 5; 
+        let baseRadius = 45;
+        
+        for (let i = 0; i < totalVertices; i++) {
+            let angle = (i / totalVertices) * Math.PI * 2;
+            let radiusVariance = baseRadius + (Math.random() * 25 - 12);
+            let x = 130 + Math.cos(angle) * radiusVariance;
+            let y = 75 + Math.sin(angle) * radiusVariance;
+            points.push({ x: x, y: y });
+        }
+        return points;
+    }
+
+    function startBorderMission() {
+        if (totalRolls < 250) {
+            alert(`❌ INSUFFICIENT ROLLS!\nLaunching the map outline scanner requires 250 rolls. You currently only have ${totalRolls}.`);
+            return;
+        }
+
+        totalRolls -= 250;
+        document.getElementById('roll-count').innerText = totalRolls;
+        checkRebirthStatus();
+
+        const keys = Object.keys(suburbsDatabase);
+        const targetTierKey = keys[Math.floor(Math.random() * keys.length)];
+        const tier = suburbsDatabase[targetTierKey];
+        const targetSuburb = tier.list[Math.floor(Math.random() * tier.list.length)];
+
+        let choicesPool = [targetSuburb];
+        let dummiesList = tier.list.filter(item => item !== targetSuburb);
+        
+        if (dummiesList.length < 2) dummiesList.push("Pascoe Vale", "Fawkner", "Essendon");
+        dummiesList.sort(() => Math.random() - 0.5);
+        choicesPool.push(dummiesList[0], dummiesList[1]);
+        choicesPool.sort(() => Math.random() - 0.5); 
+
+        document.getElementById('map-canvas-container').style.display = 'block';
+        document.getElementById('map-launch-btn').style.display = 'none';
+        
+        const clueBox = document.getElementById('mission-clue-box');
+        clueBox.style.display = 'block';
+        clueBox.innerHTML = `💡 CLUE telemetry: This target suburb belongs to the high-value "${tier.name}" tier pool. It starts with letter: "${targetSuburb.charAt(0)}"`;
+
+        const choicesBox = document.getElementById('quiz-choices-box');
+        choicesBox.style.display = 'flex';
+        choicesBox.innerHTML = '';
+
+        const canvas = document.getElementById('borderCanvas');
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        const boundaryPoints = generateRandomBorderPoints();
+        
+        ctx.beginPath();
+        ctx.moveTo(boundaryPoints[0].x, boundaryPoints[0].y);
+        for (let i = 1; i < boundaryPoints.length; i++) {
+            ctx.lineTo(boundaryPoints[i].x, boundaryPoints[i].y);
+        }
+        ctx.closePath();
+        
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = '#00c6ff';
+        ctx.fillStyle = 'rgba(0, 198, 255, 0.15)';
+        ctx.fill();
+        ctx.stroke();
+
+        choicesPool.forEach(choice => {
+            const btn = document.createElement('button');
+            btn.innerText = choice;
+            btn.style.cssText = "background: #1a1a2e; color: #fff; border: 1px solid #444; padding: 10px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 4px; width: 100%; transition: background 0.2s;";
+            btn.onclick = function() {
+                if (choice === targetSuburb) {
+                    alert(`🎯 CORRECT SCAN! That shape represents the territory layout of "${targetSuburb}"!`);
+                    rewardPremiumPrize();
+                } else {
+                    alert(`❌ INCORRECT MAP CORRELATION!\nThat shape blueprint actually belongs to "${targetSuburb}".`);
+                }
+                document.getElementById('map-canvas-container').style.display = 'none';
+                clueBox.style.display = 'none';
+                choicesBox.style.display = 'none';
+                document.getElementById('map-launch-btn').style.display = 'block';
+            };
+            choicesBox.appendChild(btn);
+        });
+    }
+<p style="color: #666; font-size: 0.8rem; text-align: center; margin-top: 15px;">v2</p>
+
 </body>
 </html>
