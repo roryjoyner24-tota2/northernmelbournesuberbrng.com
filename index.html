@@ -17,7 +17,6 @@
             padding: 20px;
             box-sizing: border-box;
         }
-
         .game-container {
             background: rgba(30, 30, 50, 0.8);
             padding: 30px;
@@ -29,7 +28,6 @@
             max-width: 500px;
             width: 100%;
         }
-
         h1 {
             font-size: 2.5rem;
             margin-bottom: 5px;
@@ -39,13 +37,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
-        .sub-heading {
-            color: #aaa;
-            font-size: 0.9rem;
-            margin-bottom: 25px;
-        }
-
+        .sub-heading { color: #aaa; font-size: 0.9rem; margin-bottom: 25px; }
         .display-box {
             background: rgba(0, 0, 0, 0.4);
             border-radius: 15px;
@@ -59,14 +51,7 @@
             transition: all 0.3s ease;
             border: 2px solid transparent;
         }
-
-        #suburb-name {
-            font-size: 2rem;
-            font-weight: bold;
-            margin: 0;
-            letter-spacing: 1px;
-        }
-
+        #suburb-name { font-size: 2rem; font-weight: bold; margin: 0; letter-spacing: 1px; }
         #rarity-tag {
             font-size: 0.9rem;
             font-weight: 800;
@@ -76,14 +61,7 @@
             border-radius: 20px;
             letter-spacing: 1px;
         }
-
-        .button-group {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
+        .button-group { display: flex; gap: 10px; justify-content: center; margin-bottom: 20px; }
         .roll-btn {
             background: linear-gradient(45deg, #00c6ff, #0072ff);
             color: white;
@@ -98,11 +76,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-
-        .roll-btn:hover {
-            box-shadow: 0 6px 20px rgba(0, 114, 255, 0.6);
-        }
-
+        .roll-btn:hover { box-shadow: 0 6px 20px rgba(0, 114, 255, 0.6); }
         .rebirth-btn {
             background: linear-gradient(45deg, #a83279, #d38312);
             color: white;
@@ -118,17 +92,8 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-
-        .rebirth-btn.active {
-            cursor: pointer;
-            opacity: 1;
-            box-shadow: 0 6px 20px rgba(168, 50, 121, 0.6);
-        }
-
-        .roll-btn:active, .rebirth-btn.active:active {
-            transform: scale(0.96);
-        }
-
+        .rebirth-btn.active { cursor: pointer; opacity: 1; box-shadow: 0 6px 20px rgba(168, 50, 121, 0.6); }
+        .roll-btn:active, .rebirth-btn.active:active { transform: scale(0.96); }
         .stats-bar {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -140,7 +105,6 @@
             padding-top: 15px;
             text-align: left;
         }
-
         .checker-box {
             margin-top: 25px;
             background: rgba(255, 255, 255, 0.05);
@@ -148,20 +112,8 @@
             padding: 15px;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-
-        .checker-box h4 {
-            margin: 0 0 10px 0;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            color: #ffae00;
-            letter-spacing: 1px;
-        }
-
-        .checker-input-wrapper {
-            display: flex;
-            gap: 8px;
-        }
-
+        .checker-box h4 { margin: 0 0 10px 0; text-transform: uppercase; font-size: 0.9rem; color: #ffae00; letter-spacing: 1px; }
+        .checker-input-wrapper { display: flex; gap: 8px; }
         .checker-box input {
             flex: 1;
             background: rgba(0, 0, 0, 0.4);
@@ -172,95 +124,32 @@
             font-size: 0.9rem;
             outline: none;
         }
-
-        .checker-box input:focus {
-            border-color: #00c6ff;
-        }
-
-        .checker-btn {
-            background: #4a4a4a;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 0.9rem;
-        }
-
-        #checker-result {
-            margin-top: 10px;
-            font-size: 0.85rem;
-            font-weight: bold;
-            text-align: left;
-            min-height: 18px;
-        }
-
-        .leaderboard {
-            margin-top: 30px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
-            padding: 15px;
-            text-align: left;
-        }
-
-        .leaderboard h3 {
-            margin: 0 0 10px 0;
-            font-size: 1.1rem;
-            text-transform: uppercase;
-            color: #00c6ff;
-            letter-spacing: 1px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 5px;
-        }
-
-        .leaderboard-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 6px 0;
-            font-size: 0.9rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .leaderboard-row:last-child {
-            border-bottom: none;
-        }
+        .checker-box input:focus { border-color: #00c6ff; }
+        .checker-btn { background: #4a4a4a; color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 0.9rem; }
+        #checker-result { margin-top: 10px; font-size: 0.85rem; font-weight: bold; text-align: left; min-height: 18px; }
+        .leaderboard { margin-top: 30px; background: rgba(0, 0, 0, 0.3); border-radius: 15px; padding: 15px; text-align: left; }
+        .leaderboard h3 { margin: 0 0 10px 0; font-size: 1.1rem; text-transform: uppercase; color: #00c6ff; letter-spacing: 1px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 5px; }
+        .leaderboard-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 0.9rem; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .leaderboard-row:last-child { border-bottom: none; }
 
         .tier-common { color: #ffffff; text-shadow: 0 0 5px rgba(255,255,255,0.3); }
         .bg-common { background-color: #4a4a4a; color: white; }
-
         .tier-uncommon { color: #2ecc71; text-shadow: 0 0 8px rgba(46, 204, 113, 0.5); }
         .bg-uncommon { background-color: #2ecc71; color: black; }
-
         .tier-rare { color: #3498db; text-shadow: 0 0 10px rgba(52, 152, 219, 0.6); }
         .bg-rare { background-color: #3498db; color: white; }
-
         .tier-epic { color: #9b59b6; text-shadow: 0 0 12px rgba(155, 89, 182, 0.7); }
         .bg-epic { background-color: #9b59b6; color: white; }
-
         .tier-legendary { color: #e67e22; animation: glow-legendary 1.5s ease-in-out infinite alternate; }
         .bg-legendary { background-color: #e67e22; color: white; }
-
         .tier-exotic { color: #e74c3c; font-weight: 900; animation: glow-exotic 1s ease-in-out infinite alternate; }
         .bg-exotic { background-color: #e74c3c; color: white; box-shadow: 0 0 10px #e74c3c; }
-
         .tier-godly { color: #00ffff; font-weight: 900; animation: glow-godly 0.8s ease-in-out infinite alternate; }
         .bg-godly { background-color: #00ffff; color: black; box-shadow: 0 0 15px #00ffff; }
 
-        @keyframes glow-legendary {
-            from { text-shadow: 0 0 5px #e67e22, 0 0 10px #e67e22; }
-            to { text-shadow: 0 0 10px #e67e22, 0 0 20px #ff9f43; }
-        }
-
-        @keyframes glow-exotic {
-            from { text-shadow: 0 0 5px #e74c3c, 0 0 15px #e74c3c, 0 0 25px #ff6b6b; transform: scale(1); }
-            to { text-shadow: 0 0 10px #e74c3c, 0 0 25px #e74c3c, 0 0 35px #ff4757; transform: scale(1.02); }
-        }
-
-        @keyframes glow-godly {
-            from { text-shadow: 0 0 5px #00ffff, 0 0 15px #00ffff, 0 0 30px #ffffff; transform: scale(1); }
-            to { text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff, 0 0 45px #ffffff; transform: scale(1.05); }
-        }
+        @keyframes glow-legendary { from { text-shadow: 0 0 5px #e67e22, 0 0 10px #e67e22; } to { text-shadow: 0 0 10px #e67e22, 0 0 20px #ff9f43; } }
+        @keyframes glow-exotic { from { text-shadow: 0 0 5px #e74c3c, 0 0 15px #e74c3c, 0 0 25px #ff6b6b; transform: scale(1); } to { text-shadow: 0 0 10px #e74c3c, 0 0 25px #e74c3c, 0 0 35px #ff4757; transform: scale(1.02); } }
+        @keyframes glow-godly { from { text-shadow: 0 0 5px #00ffff, 0 0 15px #00ffff, 0 0 30px #ffffff; transform: scale(1); } to { text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff, 0 0 45px #ffffff; transform: scale(1.05); } }
     </style>
 </head>
 <body>
@@ -287,6 +176,23 @@
             <div style="grid-column: span 2;">Best Rarity: <span id="best-rarity">None</span></div>
         </div>
 
+        <!-- Suburb Border Guessing Game Panel Interface -->
+        <div style="margin-top: 25px; background: rgba(0, 198, 255, 0.05); border: 1px dashed rgba(0, 198, 255, 0.3); border-radius: 12px; padding: 15px; text-align: center;">
+            <h4 style="margin: 0 0 5px 0; font-size: 0.85rem; color: #00c6ff; text-transform: uppercase; letter-spacing: 1px;">🗺️ Guess the Suburb Border</h4>
+            <p style="color: #ffae00; font-size: 0.75rem; margin: 0 0 10px 0; font-weight: bold;">Cost: 250 Rolls per Mission</p>
+            
+            <div id="map-canvas-container" style="display: none; background: rgba(0,0,0,0.5); border: 1px solid #444; border-radius: 8px; width: 100%; height: 160px; margin: 10px auto; position: relative;">
+                <canvas id="borderCanvas" width="260" height="150" style="margin-top: 5px;"></canvas>
+            </div>
+
+            <div id="mission-clue-box" style="display: none; background: rgba(255,174,0,0.1); border: 1px solid rgba(255,174,0,0.2); border-radius: 6px; padding: 8px; margin: 10px 0; font-size: 0.8rem; color: #ffae00; text-align: left; font-weight: bold;"></div>
+
+            <div style="display: flex; justify-content: center; flex-direction: column; gap: 8px; max-width: 280px; margin: 0 auto;">
+                <button id="map-launch-btn" onclick="startBorderMission()" style="background: #1a2c3a; color: #00c6ff; border: 1px solid #0072ff; padding: 8px 20px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">Launch Scanner</button>
+                <div id="quiz-choices-box" style="display: none; gap: 6px; flex-direction: column; width: 100%;"></div>
+            </div>
+        </div>
+
         <div class="checker-box">
             <h4>🔍 Suburb Rarity Checker</h4>
             <div class="checker-input-wrapper">
@@ -301,6 +207,10 @@
             <div id="leaderboard-list">
                 <div class="leaderboard-row" style="color: #aaa; font-style: italic;">No records yet. Keep rolling!</div>
             </div>
+        </div>
+
+        <p style="color: #666; font-size: 0.8rem; text-align: center; margin-top: 25px;">v2</p>
+    </div>
     <script>
         const suburbsDatabase = {
             common: { name: "Common", chance: 0.45, weight: 1, list: ["Broadmeadows", "Craigieburn", "Epping", "Thomastown", "Lalor", "Campbellfield", "Coolaroo", "Dallas"] },
@@ -320,16 +230,15 @@
         function checkRebirthStatus() {
             const btn = document.getElementById('rebirth-action-btn');
             const uniqueGodlys = topRolls.filter(item => item.tierName === "Godly").length;
-            
             document.getElementById('godly-count').innerText = uniqueGodlys;
 
-            // Enforces the strict double threshold barrier
             if (totalRolls >= 5000 && uniqueGodlys >= 3) {
                 btn.classList.add('active');
             } else {
                 btn.classList.remove('active');
             }
         }
+
         function triggerRebirth() {
             const uniqueGodlys = topRolls.filter(item => item.tierName === "Godly").length;
             if (totalRolls < 5000 || uniqueGodlys < 3) return;
@@ -416,25 +325,118 @@
             updateLeaderboard(randomSuburb, tier);
             checkRebirthStatus();
         }
+        function rewardPremiumPrize() {
+            let prizeTierKey = Math.random() < 0.85 ? 'exotic' : 'godly';
+            let tierList = suburbsDatabase[prizeTierKey].list;
+            let randomIndex = Math.floor(Math.random() * (tierList.length - 1)) + 1;
+            let prizeSuburb = tierList[randomIndex];
+            
+            alert(`🎁 MISSION REWARD DROPPED!\nYou won a guaranteed premium ${suburbsDatabase[prizeTierKey].name} prize: ${prizeSuburb}!`);
+            updateLeaderboard(prizeSuburb, suburbsDatabase[prizeTierKey]);
+            checkRebirthStatus();
+        }
+
+        function generateRandomBorderPoints() {
+            let points = [];
+            let totalVertices = Math.floor(Math.random() * 4) + 5; 
+            let baseRadius = 45;
+            
+            for (let i = 0; i < totalVertices; i++) {
+                let angle = (i / totalVertices) * Math.PI * 2;
+                let radiusVariance = baseRadius + (Math.random() * 25 - 12);
+                let x = 130 + Math.cos(angle) * radiusVariance;
+                let y = 75 + Math.sin(angle) * radiusVariance;
+                points.push({ x: x, y: y });
+            }
+            return points;
+        }
+
+        function startBorderMission() {
+            if (totalRolls < 250) {
+                alert(`❌ INSUFFICIENT ROLLS!\nLaunching the map outline scanner requires 250 rolls. You currently only have ${totalRolls}.`);
+                return;
+            }
+
+            totalRolls -= 250;
+            document.getElementById('roll-count').innerText = totalRolls;
+            checkRebirthStatus();
+
+            const keys = Object.keys(suburbsDatabase);
+            const targetTierKey = keys[Math.floor(Math.random() * keys.length)];
+            const tier = suburbsDatabase[targetTierKey];
+            const targetSuburb = tier.list[Math.floor(Math.random() * tier.list.length)];
+
+            let choicesPool = [targetSuburb];
+            let dummiesList = tier.list.filter(item => item !== targetSuburb);
+            
+            if (dummiesList.length < 2) dummiesList.push("Pascoe Vale", "Fawkner", "Essendon");
+            dummiesList.sort(() => Math.random() - 0.5);
+            choicesPool.push(dummiesList, dummiesList);
+            choicesPool.sort(() => Math.random() - 0.5); 
+
+            document.getElementById('map-canvas-container').style.display = 'block';
+            document.getElementById('map-launch-btn').style.display = 'none';
+            
+            const clueBox = document.getElementById('mission-clue-box');
+            clueBox.style.display = 'block';
+            clueBox.innerHTML = `💡 CLUE telemetry: This target suburb belongs to the high-value "${tier.name}" tier pool. It starts with letter: "${targetSuburb.charAt(0)}"`;
+
+            const choicesBox = document.getElementById('quiz-choices-box');
+            choicesBox.style.display = 'flex';
+            choicesBox.innerHTML = '';
+
+            const canvas = document.getElementById('borderCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const boundaryPoints = generateRandomBorderPoints();
+            
+            ctx.beginPath();
+            ctx.moveTo(boundaryPoints.x, boundaryPoints.y);
+            for (let i = 1; i < boundaryPoints.length; i++) {
+                ctx.lineTo(boundaryPoints[i].x, boundaryPoints[i].y);
+            }
+            ctx.closePath();
+            
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = '#00c6ff';
+            ctx.fillStyle = 'rgba(0, 198, 255, 0.15)';
+            ctx.fill();
+            ctx.stroke();
+
+            choicesPool.forEach(choice => {
+                const btn = document.createElement('button');
+                btn.innerText = choice;
+                btn.style.cssText = "background: #1a1a2e; color: #fff; border: 1px solid #444; padding: 10px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 4px; width: 100%; transition: background 0.2s;";
+                btn.onclick = function() {
+                    if (choice === targetSuburb) {
+                        alert(`🎯 CORRECT SCAN! That shape represents the territory layout of "${targetSuburb}"!`);
+                        rewardPremiumPrize();
+                    } else {
+                        alert(`❌ INCORRECT MAP CORRELATION!\nThat shape blueprint actually belongs to "${targetSuburb}".`);
+                    }
+                    document.getElementById('map-canvas-container').style.display = 'none';
+                    clueBox.style.display = 'none';
+                    choicesBox.style.display = 'none';
+                    document.getElementById('map-launch-btn').style.display = 'block';
+                };
+                choicesBox.appendChild(btn);
+            });
+        }
         function updateLeaderboard(suburb, tier) {
             const existingEntryIndex = topRolls.findIndex(item => item.suburb === suburb);
-            
             if (existingEntryIndex === -1) {
                 topRolls.push({ suburb: suburb, tierName: tier.name, weight: tier.weight, count: 1 });
             } else {
                 topRolls[existingEntryIndex].count++;
             }
-
             topRolls.sort((a, b) => b.weight - a.weight || b.count - a.count);
-
             const listEl = document.getElementById('leaderboard-list');
             listEl.innerHTML = '';
-
             topRolls.slice(0, 5).forEach((item, index) => {
                 const row = document.createElement('div');
                 row.className = 'leaderboard-row';
                 const tierKey = item.tierName.toLowerCase();
-                
                 row.innerHTML = `
                     <span><strong>#${index + 1}</strong> - <span class="tier-${tierKey}">${item.suburb}</span> (${item.tierName})</span>
                     <span style="color: #aaa;">x${item.count} rolls</span>
@@ -443,25 +445,19 @@
             });
         }
 
-        // Suburb Lookup Verification Tool
         function checkSuburbRarity() {
             const inputEl = document.getElementById('checker-search-input');
             const resultEl = document.getElementById('checker-result');
             const query = inputEl.value.trim().toLowerCase();
-            
             if (!query) {
                 resultEl.innerText = "Please enter a suburb name first.";
-                resultEl.className = "";
                 resultEl.style.color = "#ff4757";
                 return;
             }
-
             let found = false;
-
             for (const key in suburbsDatabase) {
                 const tier = suburbsDatabase[key];
                 const match = tier.list.find(suburb => suburb.toLowerCase() === query);
-                
                 if (match) {
                     resultEl.innerHTML = `✅ <span class="tier-${key}">${match}</span> is in the game! Rarity Tier: <span class="tier-${key}">${tier.name}</span> (Base: 1 in ${Math.round(1 / tier.chance)})`;
                     resultEl.style.color = "#ffffff";
@@ -469,132 +465,11 @@
                     break;
                 }
             }
-
             if (!found) {
                 resultEl.innerText = `❌ "${inputEl.value}" was not found in the game files.`;
-                resultEl.className = "";
                 resultEl.style.color = "#ff4757";
             }
         }
     </script>
-<!-- Mini-Game Panel (Injected Interface Layout) -->
-<div style="margin-top: 25px; background: rgba(0, 198, 255, 0.05); border: 1px dashed rgba(0, 198, 255, 0.3); border-radius: 12px; padding: 15px; text-align: center;">
-    <h4 style="margin: 0 0 5px 0; font-size: 0.85rem; color: #00c6ff; text-transform: uppercase; letter-spacing: 1px;">🗺️ Guess the Suburb Border</h4>
-    <p style="color: #ffae00; font-size: 0.75rem; margin: 0 0 10px 0; font-weight: bold;">Cost: 250 Rolls per Mission</p>
-    
-    <div id="map-canvas-container" style="display: none; background: rgba(0,0,0,0.5); border: 1px solid #444; border-radius: 8px; width: 100%; height: 160px; margin: 10px auto; position: relative;">
-        <canvas id="borderCanvas" width="260" height="150" style="margin-top: 5px;"></canvas>
-    </div>
-
-    <div id="mission-clue-box" style="display: none; background: rgba(255,174,0,0.1); border: 1px solid rgba(255,174,0,0.2); border-radius: 6px; padding: 8px; margin: 10px 0; font-size: 0.8rem; color: #ffae00; text-align: left; font-weight: bold;"></div>
-
-    <div style="display: flex; justify-content: center; flex-direction: column; gap: 8px; max-width: 280px; margin: 0 auto;">
-        <button id="map-launch-btn" onclick="startBorderMission()" style="background: #1a2c3a; color: #00c6ff; border: 1px solid #0072ff; padding: 8px 20px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">Launch Scanner</button>
-        <div id="quiz-choices-box" style="display: none; gap: 6px; flex-direction: column; width: 100%;"></div>
-    </div>
-</div>
-
-<script>
-    // Helper function to roll a random premium prize (skipping index 0)
-    function rewardPremiumPrize() {
-        let prizeTierKey = Math.random() < 0.85 ? 'exotic' : 'godly';
-        let tierList = suburbsDatabase[prizeTierKey].list;
-        let randomIndex = Math.floor(Math.random() * (tierList.length - 1)) + 1;
-        let prizeSuburb = tierList[randomIndex];
-        
-        alert(`🎁 MISSION REWARD DROPPED!\nYou won a guaranteed premium ${suburbsDatabase[prizeTierKey].name} prize: ${prizeSuburb}!`);
-        updateLeaderboard(prizeSuburb, suburbsDatabase[prizeTierKey]);
-        checkRebirthStatus();
-    }
-
-    function generateRandomBorderPoints() {
-        let points = [];
-        let totalVertices = Math.floor(Math.random() * 4) + 5; 
-        let baseRadius = 45;
-        
-        for (let i = 0; i < totalVertices; i++) {
-            let angle = (i / totalVertices) * Math.PI * 2;
-            let radiusVariance = baseRadius + (Math.random() * 25 - 12);
-            let x = 130 + Math.cos(angle) * radiusVariance;
-            let y = 75 + Math.sin(angle) * radiusVariance;
-            points.push({ x: x, y: y });
-        }
-        return points;
-    }
-
-    function startBorderMission() {
-        if (totalRolls < 250) {
-            alert(`❌ INSUFFICIENT ROLLS!\nLaunching the map outline scanner requires 250 rolls. You currently only have ${totalRolls}.`);
-            return;
-        }
-
-        totalRolls -= 250;
-        document.getElementById('roll-count').innerText = totalRolls;
-        checkRebirthStatus();
-
-        const keys = Object.keys(suburbsDatabase);
-        const targetTierKey = keys[Math.floor(Math.random() * keys.length)];
-        const tier = suburbsDatabase[targetTierKey];
-        const targetSuburb = tier.list[Math.floor(Math.random() * tier.list.length)];
-
-        let choicesPool = [targetSuburb];
-        let dummiesList = tier.list.filter(item => item !== targetSuburb);
-        
-        if (dummiesList.length < 2) dummiesList.push("Pascoe Vale", "Fawkner", "Essendon");
-        dummiesList.sort(() => Math.random() - 0.5);
-        choicesPool.push(dummiesList[0], dummiesList[1]);
-        choicesPool.sort(() => Math.random() - 0.5); 
-
-        document.getElementById('map-canvas-container').style.display = 'block';
-        document.getElementById('map-launch-btn').style.display = 'none';
-        
-        const clueBox = document.getElementById('mission-clue-box');
-        clueBox.style.display = 'block';
-        clueBox.innerHTML = `💡 CLUE telemetry: This target suburb belongs to the high-value "${tier.name}" tier pool. It starts with letter: "${targetSuburb.charAt(0)}"`;
-
-        const choicesBox = document.getElementById('quiz-choices-box');
-        choicesBox.style.display = 'flex';
-        choicesBox.innerHTML = '';
-
-        const canvas = document.getElementById('borderCanvas');
-        const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        const boundaryPoints = generateRandomBorderPoints();
-        
-        ctx.beginPath();
-        ctx.moveTo(boundaryPoints[0].x, boundaryPoints[0].y);
-        for (let i = 1; i < boundaryPoints.length; i++) {
-            ctx.lineTo(boundaryPoints[i].x, boundaryPoints[i].y);
-        }
-        ctx.closePath();
-        
-        ctx.lineWidth = 3;
-        ctx.strokeStyle = '#00c6ff';
-        ctx.fillStyle = 'rgba(0, 198, 255, 0.15)';
-        ctx.fill();
-        ctx.stroke();
-
-        choicesPool.forEach(choice => {
-            const btn = document.createElement('button');
-            btn.innerText = choice;
-            btn.style.cssText = "background: #1a1a2e; color: #fff; border: 1px solid #444; padding: 10px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 4px; width: 100%; transition: background 0.2s;";
-            btn.onclick = function() {
-                if (choice === targetSuburb) {
-                    alert(`🎯 CORRECT SCAN! That shape represents the territory layout of "${targetSuburb}"!`);
-                    rewardPremiumPrize();
-                } else {
-                    alert(`❌ INCORRECT MAP CORRELATION!\nThat shape blueprint actually belongs to "${targetSuburb}".`);
-                }
-                document.getElementById('map-canvas-container').style.display = 'none';
-                clueBox.style.display = 'none';
-                choicesBox.style.display = 'none';
-                document.getElementById('map-launch-btn').style.display = 'block';
-            };
-            choicesBox.appendChild(btn);
-        });
-    }
-<p style="color: #666; font-size: 0.8rem; text-align: center; margin-top: 15px;">v2</p>
-
 </body>
 </html>
